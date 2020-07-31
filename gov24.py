@@ -8,8 +8,10 @@ import check_mail
 import send_email
 import send_dooray
 import datetime
+import logging
 
-
+file_name = './log/notic_scrap.txt'
+logging.basicConfig(filename=file_name,level=logging.DEBUG)
 def emergency():
     # 페이지 접속
     req = requests.get('https://www.gov.kr/mntnce_notice.html')
@@ -27,6 +29,7 @@ def go():
 
     # 오늘날짜
     today = datetime.datetime.now()
+    logging.info("today is "+str(today))
     # ===================================================#
 
     # 페이지 접속
