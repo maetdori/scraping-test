@@ -1,6 +1,7 @@
-## notice_scrap
+# notice_scrap
 사용자의 컴퓨터 환경에 따라서 **tesseract**와 **chromedriver**설치를 각각 해줘야 한다.   
-[chromedriver_상세설명](https://beomi.github.io/2017/02/27/HowToMakeWebCrawler-With-Selenium/ "chromedriver 설정 방법블로그")  
+[chromedriver_상세설명](https://beomi.github.io/2017/02/27/HowToMakeWebCrawler-With-Selenium/ "chromedriver 설정 방법블로그")       
+현재 자신의 컴퓨터에 설치된 크롬 버전을 확인하려면 크롬브라우저를 열어 **chrome://version**을 친다.  
 [chromedriver 다운](https://sites.google.com/a/chromium.org/chromedriver/home "다운링크")   
 [tesseract](https://github.com/UB-Mannheim/tesseract/wiki "tesseract 다운링크")  
 chromedriver는 **safedriver , payinfo , hikorea**의 공지를 가져올 때 사용함.  
@@ -14,3 +15,4 @@ tesseract은 **savedriver**의 공지를 가져올 때 사용한다.
 * pip install opencv-python
 * pip install beautifulsoup4
 * pip install requests
+* pip install logging
