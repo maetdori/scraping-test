@@ -5,7 +5,16 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import check_mail
+import json
+import logging
 
+#log config
+with open("./globalval.json",'r') as file:
+    json_data = json.load(file)
+file_name = json_data["log_file_path"]
+log_level = json_data["log_level"]
+chromedriver = json_data["chromedrive_exe_path"]
+logging.basicConfig(filename=file_name,level=log_level)
 
 def go():
 	#===================================================#
@@ -14,13 +23,14 @@ def go():
 
 	#오늘날짜
 	today = datetime.datetime.now()
+	logging.debug("hikorea : "+str(today))
 	#===================================================#
 	# 헤드리스
 	options = webdriver.ChromeOptions()
 	options.add_argument('headless')
 	options.add_argument('window-size=1920x1080')
 	options.add_argument("disable-gpu")
-	driver = webdriver.Chrome('chromedriver', options=options)
+	driver = webdriver.Chrome(chromedriver, options=options)
 	wait = WebDriverWait(driver, 20)
 	driver.get(
 		'https://www.hikorea.go.kr/pt/NtcCotnPageR_kr.pt?bbsNm=%EA%B3%B5%EC%A7%80%EC%82%AC%ED%95%AD&bbsGbCd=BS10&langCd=KR&bbsSeq=1&locale=ko')

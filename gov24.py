@@ -9,9 +9,15 @@ import send_email
 import send_dooray
 import datetime
 import logging
+import json
 
-file_name = './log/notic_scrap.txt'
-logging.basicConfig(filename=file_name,level=logging.DEBUG)
+#log config
+with open("./globalval.json",'r') as file:
+    json_data = json.load(file)
+file_name = json_data["log_file_path"]
+log_level = json_data["log_level"]
+
+logging.basicConfig(filename=file_name,level=log_level)
 def emergency():
     # 페이지 접속
     req = requests.get('https://www.gov.kr/mntnce_notice.html')

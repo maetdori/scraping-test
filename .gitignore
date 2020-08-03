@@ -105,6 +105,5 @@ venv.bak/
 *.pyc
 *.exe
 *.png
-*.json
 *.txt
 *.jpg

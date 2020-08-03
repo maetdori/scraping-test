@@ -16,3 +16,16 @@ tesseract은 **savedriver**의 공지를 가져올 때 사용한다.
 * pip install beautifulsoup4
 * pip install requests
 * pip install logging
+
+
+파일들에서 쓰이는 공통 변수는 globalval.json에 넣어놨다.  
+파일 경로를 변경하고 싶으면 globalval.json에서 변경한다.  
+json작성시 loglevel 참고.  
+#### CRITICAL = 50,
+#### FATAL = CRITICAL,
+#### ERROR = 40,
+#### WARNING = 30,
+#### WARN = WARNING,
+#### INFO = 20,
+#### DEBUG = 10,
+#### NOTSET = 0

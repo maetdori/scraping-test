@@ -11,6 +11,8 @@ import gygd
 import credit4u
 import payinfo
 import send_dooray
+import logging
+import json
 
 ############################################################################################################################################################################################
 #   mw24-민원   /goc24-정부  /iros-인터넷 등기소    /nhis-건보    /nps-국민연금공단
@@ -24,7 +26,16 @@ import send_dooray
 #   check_mail.py : 메일 내용을 대충 보고 분류함
 ############################################################################################################################################################################################
 
-noti_list = [mw24.go(), gov24.go(), iros.go(), nhis.go(), nps.go(), efamily.go(), safedriving.go(), hikorea.go(),  gygd.go(), credit4u.go(),payinfo.go()]  # gygd : 금융감독원 통합연금포털
+#log config
+with open("./globalval.json",'r') as file:
+    json_data = json.load(file)
+file_name = json_data["log_file_path"]
+log_level = json_data["log_level"]
+
+logging.basicConfig(filename=file_name,level=log_level)
+
+# noti_list = [gov24.go(), iros.go(), nhis.go(), nps.go(), efamily.go(), safedriving.go(), hikorea.go(),  gygd.go(), credit4u.go(),payinfo.go()]  # gygd : 금융감독원 통합연금포털
+noti_list = [safedriving.go()]  # gygd : 금융감독원 통합연금포털
 noti_total = 11
 noti_string = ""
 noti = ""
@@ -42,6 +53,7 @@ for i in noti_string.split("\n"):
     if i == "":
         break
     k += 1
+    
     noti += str(k) + ") " + i + "\n"
 #   dooray messenger 전송
 if k != 0:

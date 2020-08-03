@@ -12,6 +12,5 @@ def main():
 if __name__ == "__main__":
    logging.basicConfig(level=logging.INFO)
    sched = BlockingScheduler()
-   sched.add_job(main, 'cron', hour="17", minute="20")
-
+   sched.add_job(main, 'cron', hour="13", minute="38")
    sched.start()

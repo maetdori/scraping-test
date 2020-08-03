@@ -10,21 +10,33 @@ from PIL import Image
 from pytesseract import *
 import cv2
 pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+import json
+import logging
+
+#log config
+with open("./globalval.json",'r') as file:
+    json_data = json.load(file)
+file_name = json_data["log_file_path"]
+log_level = json_data["log_level"]
+chromedriver = json_data["chromedrive_exe_path"]
+
+logging.basicConfig(filename=file_name,level=log_level)
 
 def go():
-
 	#===================================================#
 	#메일에 들어갈 내용
 	mail_body = {}
 	#오늘날짜
 	today = datetime.datetime.now()
+	logging.debug("safedriving : "+str(today))
 	# #===================================================#
 	# 헤드리스
 	options = webdriver.ChromeOptions()
 	options.add_argument('headless')
 	options.add_argument('window-size=1920x1080')
 	options.add_argument("disable-gpu")
-	driver = webdriver.Chrome('chromedriver', options=options)
+	driver = webdriver.Chrome(chromedriver, options=options) #chromedriver를 현재 local 컴퓨터에 깔려있는 chrome버전에 맞게 깔아주고 연결시켜준다.(https://beomi.github.io/2017/02/27/HowToMakeWebCrawler-With-Selenium/)
+	driver.implicitly_wait(3)
 	driver.get("https://www.safedriving.or.kr/main.do")
 
 	#화면 최대화

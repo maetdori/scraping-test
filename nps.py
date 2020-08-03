@@ -2,6 +2,16 @@ from bs4 import BeautifulSoup
 from urllib.request import urlopen
 import check_mail
 import datetime
+import json
+import logging
+
+#log config
+with open("./globalval.json",'r') as file:
+    json_data = json.load(file)
+file_name = json_data["log_file_path"]
+log_level = json_data["log_level"]
+
+logging.basicConfig(filename=file_name,level=log_level)
 
 def go():
 	# ===================================================#

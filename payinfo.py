@@ -11,6 +11,17 @@ import send_email
 
 import check_mail
 import time
+import json
+import logging
+
+#log config
+with open("./globalval.json",'r') as file:
+    json_data = json.load(file)
+file_name = json_data["log_file_path"]
+log_level = json_data["log_level"]
+chromedriver = json_data["chromedrive_exe_path"]
+
+logging.basicConfig(filename=file_name,level=log_level)
 
 def go():
     # ===================================================
@@ -18,14 +29,14 @@ def go():
     mail_body = {}
     # 오늘날짜
     today = datetime.datetime.now()
-
+    logging.debug("payinfo : "+str(today))
     # ===================================================
     # 헤드리스
     options = webdriver.ChromeOptions()
     options.add_argument('headless')
     options.add_argument('window-size=1920x1080')
     options.add_argument("disable-gpu")
-    driver = webdriver.Chrome('chromedriver', options=options)
+    driver = webdriver.Chrome(chromedriver, options=options)
     # 사이트 접속
     wait = WebDriverWait(driver, 20)
     driver.get('https://www.payinfo.or.kr/index.do')

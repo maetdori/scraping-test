@@ -7,6 +7,16 @@ import datetime
 
 import check_mail
 import send_email
+import json
+import logging
+
+#log config
+with open("./globalval.json",'r') as file:
+    json_data = json.load(file)
+file_name = json_data["log_file_path"]
+log_level = json_data["log_level"]
+
+logging.basicConfig(filename=file_name,level=log_level)
 
 #===================================================#
 #메일에 들어갈 내용
