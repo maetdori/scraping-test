@@ -33,7 +33,7 @@ def go():
 	driver = webdriver.Chrome(chromedriver, options=options)
 	wait = WebDriverWait(driver, 20)
 	driver.get(
-		'https://www.hikorea.go.kr/pt/NtcCotnPageR_kr.pt?bbsNm=%EA%B3%B5%EC%A7%80%EC%82%AC%ED%95%AD&bbsGbCd=BS10&langCd=KR&bbsSeq=1&locale=ko')
+		'https://www.hikorea.go.kr/board/BoardNtcListR.pt?page=1') #https://www.hikorea.go.kr/pt/NtcCotnPageR_kr.pt?bbsNm=%EA%B3%B5%EC%A7%80%EC%82%AC%ED%95%AD&bbsGbCd=BS10&langCd=KR&bbsSeq=1&locale=ko
 
 	soup = BeautifulSoup(driver.page_source, 'html.parser')
 	td = soup.find_all('td', {'class': 'tdData'})
