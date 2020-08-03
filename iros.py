@@ -36,11 +36,10 @@ def go():
 	opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cj))
 
 	# access to notification page and get html
-	html = opener.open("http://www.iros.go.kr/pos1/pfrontservlet?cmd=PCMS6GetBoardC&menuid=001004003001&boardTypeID=2&category=").read()
-
+	html = opener.open("http://www.iros.go.kr/pos1/pfrontservlet?cmd=PCMS6GetBoardC&menuid=001004003001&boardTypeID=2&category=").read().decode('euc-kr')
 	# parse html
 	soup = BeautifulSoup(html, "html.parser")
-
+	
 	# find noti title / date / content
 	noti_list = []
 	noti_table = soup.find(name="table")
@@ -48,15 +47,15 @@ def go():
 		if tr.td == None: continue	# skip when td is None
 
 		# get title / date
-		title = str(tr.td.get_text().strip().encode("utf-8"))
-		date = str(tr.td.next_sibling.next_sibling.string.encode("utf-8"))
+		title = tr.td.get_text().strip()
+		date = tr.td.next_sibling.next_sibling.string
 
 		# test compare date with today
 		if date != today.strftime("%Y-%m-%d"):	# skip when not today
 			continue
 
 		# access noti detail page for get content
-		html = opener.open("http://www.iros.go.kr" + tr.a["href"]).read()
+		html = opener.open("http://www.iros.go.kr" + tr.a["href"]).read().decode('euc-kr')
 
 		# parse html
 		sub_soup = BeautifulSoup(html, "html.parser")
@@ -66,8 +65,7 @@ def go():
 		# get content
 		content = sub_soup.find(class_="view_con")
 		content_str = content.get_text()
-		content_str = str(content_str.encode("utf-8").strip())
-
+		content_str = content_str.strip()
 		# append noti_list
 		noti = {
 			"title":title,
