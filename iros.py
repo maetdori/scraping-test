@@ -37,15 +37,18 @@ def go():
 
 	# access to notification page and get html
 	html = opener.open("http://www.iros.go.kr/pos1/pfrontservlet?cmd=PCMS6GetBoardC&menuid=001004003001&boardTypeID=2&category=").read().decode('euc-kr')
+<<<<<<< HEAD
 	
 	#
 	f = open("./response.txt", "w")
 	f.write(str(html))
 	f.close()
 
+=======
+>>>>>>> 0ef302b0c6c72710b99a35d493f7dae767eeaf55
 	# parse html
 	soup = BeautifulSoup(html, "html.parser")
-
+	
 	# find noti title / date / content
 	noti_list = []
 	noti_table = soup.find("table")
@@ -54,8 +57,13 @@ def go():
 		td = tr.find_all("td")
 
 		# get title / date
+<<<<<<< HEAD
 		title = td[0].get_text().strip()
 		date = td[1].get_text().strip()
+=======
+		title = tr.td.get_text().strip()
+		date = tr.td.next_sibling.next_sibling.string
+>>>>>>> 0ef302b0c6c72710b99a35d493f7dae767eeaf55
 
 		# test compare date with today
 		if date != today.strftime("%Y-%m-%d"):	# skip when not today
@@ -64,7 +72,11 @@ def go():
 		logging.debug(title + date)
 		
 		# access noti detail page for get content
+<<<<<<< HEAD
 		html = opener.open("http://www.iros.go.kr" + td[0].a["href"]).read().decode('euc-kr')
+=======
+		html = opener.open("http://www.iros.go.kr" + tr.a["href"]).read().decode('euc-kr')
+>>>>>>> 0ef302b0c6c72710b99a35d493f7dae767eeaf55
 
 		# parse html
 		sub_soup = BeautifulSoup(html, "html.parser")
@@ -75,7 +87,10 @@ def go():
 		content = sub_soup.find(class_="view_con")
 		content_str = content.get_text()
 		content_str = content_str.strip()
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0ef302b0c6c72710b99a35d493f7dae767eeaf55
 		# append noti_list
 		noti = {
 			"title":title,
