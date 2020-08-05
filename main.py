@@ -1,4 +1,5 @@
 import send_email
+import send_dooray
 import mw24
 import gov24
 import iros
@@ -38,13 +39,16 @@ logging.basicConfig(filename=file_name,level=log_level)
 noti_list = [safedriving.go()]  # gygd : 금융감독원 통합연금포털
 noti_total = 11
 noti_string = ""
-noti = ""
-
+noti = "" 
+logging.debug("noti_list: " + str(noti_list))
 #   noti_list 의 원소들을 실행시킨 return 값을 문자열로 바꾸어 noti_string 에 저장한다.
 for i in noti_list:
     try:
+        logging.debug("noti_String")
         noti_string += str(i)
+        logging.debug("noti_string : " + noti_string)
     except:
+        logging.error("noti_String Error")
         send_email("비정상1",['에러 발생'])
 
 #   noti_string 의 문자열을 넘버링하여 noti 로 저장.
@@ -55,6 +59,7 @@ for i in noti_string.split("\n"):
     k += 1
     
     noti += str(k) + ") " + i + "\n"
+    logging.debug("noti info : "+noti)
 #   dooray messenger 전송
 if k != 0:
     send_dooray.send_dooray_noti(noti, noti_total, k)

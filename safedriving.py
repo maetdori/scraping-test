@@ -8,7 +8,7 @@ from PIL import Image
 import pytesseract
 from PIL import Image
 from pytesseract import *
-import cv2
+from cv2 import cv2
 pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 import json
 import logging
@@ -61,10 +61,12 @@ def go():
 	img = MIMEImage(fp.read())
 	fp.close()
 
-	#오늘날짜가 있으면 메일 보내기
-	for item in text:
-		item = item.replace(" ", "").replace(',','.')
-		if str(today.month) + "." + str(today.day) in item:
-			mail_body["도로교통공단 안전운전 통합민원"] = item
-			return check_mail.check("도로교통공단 안전운전 통합민원",mail_body,attach_img=img)
+	#"중단"이라는 단어가 있으면 
+	if any("중단" in s for s in text):
+		#오늘날짜가 있으면 메일 보내기
+		for item in text:
+			item = item.replace(" ", "").replace(',','.')
+			if today.strftime("%Y.%m.%d") in item:
+				mail_body["도로교통공단 안전운전 통합민원"] = item
+				return check_mail.check("도로교통공단 안전운전 통합민원",mail_body,attach_img=img)
 	return check_mail.check("도로교통공단 안전운전 통합민원", {})

@@ -11,7 +11,8 @@ from httplib2 import Http
 def send_dooray_noti(name,noti_total, k):
     # req = urllib.request.urlopen(url, json.dups(data), {'Content-Type': 'application/json'}).read()
     # return req
-    url = "https://hook.dooray.com/services/2271045959672406714/2645505418623250553/gx_jYYfsRy6ZWPHpqw-WvA"
+
+    url = "https://hook.dooray.com/services/2271045959672406714/2803437871967119166/92V0y5P1Sc6GYp_R5xX3pA"
     data = {
         "botName": "공지사항 봇",
         "text":  " 금일 하기 사이트는 공지사항이 없습니다. ("+str(k)+"/"+str(noti_total)+")",
@@ -83,5 +84,5 @@ def test_send(sitetype, title, content):
         ]
     }
 
-    send_dooray_noti("https://hook.dooray.com/services/2271045959672406714/2418073129534065736/2nkpAeNiQDaGVzhuua661Q",
-                     data)
+    send_dooray_noti("https://hook.dooray.com/services/2271045959672406714/2418073129534065736/2nkpAeNiQDaGVzhuua661Q", data)
+    

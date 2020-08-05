@@ -1,6 +1,6 @@
 {
-    "log_file_path" : "./log/notic_scrap.txt",
+    "log_file_path" : "./log/notice_scrap.txt",
     "log_level" : 10,
-    "chromedrive_exe_path" : "./chromedriver\\chromedriver.exe",
+    "chromedrive_exe_path" : "C:\\Users\\minij\\Desktop\\notice_scrap\\chromedriver.exe",
     "tesseract_path" : "C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
 }

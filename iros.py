@@ -36,27 +36,35 @@ def go():
 	opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cj))
 
 	# access to notification page and get html
-	html = opener.open("http://www.iros.go.kr/pos1/pfrontservlet?cmd=PCMS6GetBoardC&menuid=001004003001&boardTypeID=2&category=").read()
+	html = opener.open("http://www.iros.go.kr/pos1/pfrontservlet?cmd=PCMS6GetBoardC&menuid=001004003001&boardTypeID=2&category=").read().decode('euc-kr')
+	
+	#
+	f = open("./response.txt", "w")
+	f.write(str(html))
+	f.close()
 
 	# parse html
 	soup = BeautifulSoup(html, "html.parser")
 
 	# find noti title / date / content
 	noti_list = []
-	noti_table = soup.find(name="table")
-	for tr in noti_table.find_all(name="tr"):
+	noti_table = soup.find("table")
+	for tr in noti_table.find_all("tr"): # 1 tr for 1 notice
 		if tr.td == None: continue	# skip when td is None
+		td = tr.find_all("td")
 
 		# get title / date
-		title = str(tr.td.get_text().strip().encode("utf-8"))
-		date = str(tr.td.next_sibling.next_sibling.string.encode("utf-8"))
+		title = td[0].get_text().strip()
+		date = td[1].get_text().strip()
 
 		# test compare date with today
 		if date != today.strftime("%Y-%m-%d"):	# skip when not today
 			continue
 
+		logging.debug(title + date)
+		
 		# access noti detail page for get content
-		html = opener.open("http://www.iros.go.kr" + tr.a["href"]).read()
+		html = opener.open("http://www.iros.go.kr" + td[0].a["href"]).read().decode('euc-kr')
 
 		# parse html
 		sub_soup = BeautifulSoup(html, "html.parser")
@@ -66,7 +74,7 @@ def go():
 		# get content
 		content = sub_soup.find(class_="view_con")
 		content_str = content.get_text()
-		content_str = str(content_str.encode("utf-8").strip())
+		content_str = content_str.strip()
 
 		# append noti_list
 		noti = {
@@ -75,6 +83,8 @@ def go():
 			"content":content_str
 		}
 		noti_list.append(noti)
+		
+		logging.debug(noti_list)
 
 	noti_list.sort(key=lambda x: x["date"], reverse=True)
 
@@ -87,9 +97,6 @@ def go():
 		abort_thing ="N"
 		for noti in noti_list:
 			for item in noti["content"].split("○"):
-
-				#print "item : ", item
-
 				#abort_date
 				if abort_date == "N" and "중단일시" in item and "중단대상" in item:
 					abort_date = item[:item.index('중단대상')]
@@ -110,3 +117,4 @@ def go():
 
 			mail_body[noti["title"]] = abort_date
 			return check_mail.check("인터넷 등기소", mail_body)
+

@@ -36,10 +36,10 @@ def go():
     # 오늘날짜인지 확인하기
     for i in range(len(date_list)):
         if date_list[i].get_text().strip() == today.strftime(str(today.year) + "." + str(today.month) + "." + str(today.day)):  #"%Y.%m.%d"):
-        # if date_list[i].get_text().strip() == '2019.12.06':  # 테스트용으로 2월 11일 공지를 넣음
+        # if date_list[i].get_text().strip() == '2020.08.03':  # 테스트용으로 8월 3일 공지를 넣음
             utf_notice = notice_list[i].get_text().strip()
             print( today.strftime(str(today.year) + "." + str(today.month) + "." + str(today.day)))
-            mail_body[utf_notice] = str(date_list[i]) + '공지사항이 있습니다. (홈페이지 확인 요망)'
+            mail_body[utf_notice] = str(date_list[i]) + ' 공지사항이 있습니다. (홈페이지 확인 요망)'
     if mail_body:  # 금일 날짜로 된 공지가 있을 때 메일을 보낸다.
         return check_mail.check("전자가족관계등록시스템", mail_body)
     else:
