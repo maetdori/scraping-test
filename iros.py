@@ -59,6 +59,7 @@ def go():
 
 		# test compare date with today
 		if date != today.strftime("%Y-%m-%d"):	# skip when not today
+		#if date != "2020-08-05":
 			continue
 
 		logging.debug(title + date)
@@ -115,7 +116,9 @@ def go():
 					abort_thing = item[item.find('중단대상'):item.find('※')]
 				if "중단 대상" in item:
 					abort_thing = item
-
+				else:
+					return check_mail.check("인터넷 등기소", mail_body)
+			#logging.debug("title: " , noti["title"])
 			mail_body[noti["title"]] = abort_date
 			return check_mail.check("인터넷 등기소", mail_body)
 

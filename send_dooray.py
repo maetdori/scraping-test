@@ -11,10 +11,10 @@ from httplib2 import Http
 def send_dooray_noti(name,noti_total, k):
     # req = urllib.request.urlopen(url, json.dups(data), {'Content-Type': 'application/json'}).read()
     # return req
-    #url = "https://hook.dooray.com/services/2271045959672406714/2803437871967119166/92V0y5P1Sc6GYp_R5xX3pA"
+    url = "https://hook.dooray.com/services/2271045959672406714/2803437871967119166/92V0y5P1Sc6GYp_R5xX3pA"
     
     #20 하계 인턴
-    url = "https://hook.dooray.com/services/2271045959672406714/2802746659054779492/kyRO6sEvTCaxmJGSMyle3g"
+    #url = "https://hook.dooray.com/services/2271045959672406714/2802746659054779492/kyRO6sEvTCaxmJGSMyle3g"
 
     data = {
         "botName": "공지사항 봇",

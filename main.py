@@ -36,11 +36,10 @@ log_level = json_data["log_level"]
 logging.basicConfig(filename=file_name,level=log_level)
 
 # noti_list = [gov24.go(), iros.go(), nhis.go(), nps.go(), efamily.go(), safedriving.go(), hikorea.go(),  gygd.go(), credit4u.go(),payinfo.go()]  # gygd : 금융감독원 통합연금포털
-noti_list = [safedriving.go()]  # gygd : 금융감독원 통합연금포털
-noti_total = 11
+noti_list = [iros.go()]  # gygd : 금융감독원 통합연금포털
+noti_total = 7
 noti_string = ""
 noti = "" 
-logging.debug("noti_list: " + str(noti_list))
 #   noti_list 의 원소들을 실행시킨 return 값을 문자열로 바꾸어 noti_string 에 저장한다.
 for i in noti_list:
     try:
