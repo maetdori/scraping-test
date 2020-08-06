@@ -37,7 +37,6 @@ def go():
 
 	# access to notification page and get html
 	html = opener.open("http://www.iros.go.kr/pos1/pfrontservlet?cmd=PCMS6GetBoardC&menuid=001004003001&boardTypeID=2&category=").read().decode('euc-kr')
-
 	#
 	f = open("./response.txt", "w")
 	f.write(str(html))
