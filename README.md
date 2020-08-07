@@ -8,6 +8,12 @@ chromedriver는 **safedriver , payinfo , hikorea**의 공지를 가져올 때 �
 chormedriver는 설치 후, 소스내에서 wevdriver.Chrome()에서 경로를 기존의것에서 변경하여 사용.  
 tesseract은 **savedriver**의 공지를 가져올 때 사용한다.
 
+리눅스(linux)에서 **chromedriver,tesseract**를 실행시 파일에 따로 실행파일확장자가 없기 때문에 실행권한을 따로 줘야하고, safedriving.py의 options.add_argument의 내용도 바뀐다.  
+#### options.add_argument('--headless')  
+#### options.add_argument('--no-sandbox')  
+#### options.add_argument("disable-dev-shm-usage")
+
+
 그 외 외부 라이브러리 설치가 많다.
 * pip install httplib2
 * pip install selenium
