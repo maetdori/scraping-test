@@ -35,9 +35,21 @@ log_level = json_data["log_level"]
 
 logging.basicConfig(filename=file_name,level=log_level)
 
+#file open test
+# file = open("./iros.html","r")
+# a = ""
+# while True:
+#     line = file.readline()
+#     line = line.encode()
+#     if not line : break
+#     line = line.decode("utf-8")
+#     a = a + line
+# file = open("./diros.html","w")
+# file.write(a)
+# file.close()
 # noti_list = [gov24.go(), iros.go(), nhis.go(), nps.go(), efamily.go(), safedriving.go(), hikorea.go(),  gygd.go(), credit4u.go(),payinfo.go()]  # gygd : 금융감독원 통합연금포털
 noti_list = [iros.go()]  # gygd : 금융감독원 통합연금포털
-noti_total = 7
+noti_total = 90
 noti_string = ""
 noti = "" 
 #   noti_list 의 원소들을 실행시킨 return 값을 문자열로 바꾸어 noti_string 에 저장한다.
