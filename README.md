@@ -12,10 +12,11 @@ tesseract은 **savedriver**의 공지를 가져올 때 사용한다.
 * pip install httplib2
 * pip install selenium
 * pip install pillow
-* pip install opencv-python
+* pip install opencv-python   opencv같은 경우 aws나 google cloud와 같은 가상환경에서 실행할 경우에 GUI가 없을 가능성이 높아서 **pip install opencv-python-headless**를 설치해야함.
 * pip install beautifulsoup4
 * pip install requests
 * pip install logging
+* pip install pytesseract
 
 
 파일들에서 쓰이는 공통 변수는 globalval.json에 넣어놨다.  
