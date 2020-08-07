@@ -53,9 +53,9 @@ def go():
 		banner_dict = {}
 		li_list = banner.find_all("li")
 		if len(li_list) >= 3:
-			banner_dict["term"] = li_list[0].contents[1].strip()
-			banner_dict["reason"] = li_list[1].contents[1].strip()
-			banner_dict["target"] = li_list[2].contents[1].strip()
+			banner_dict["term"] = li_list[0].contents[1].strip() #기간
+			banner_dict["reason"] = li_list[1].contents[1].strip() #사유
+			banner_dict["target"] = li_list[2].contents[1].strip() #대상
 
 			abort_date = banner_dict["term"]
 			abort_why = banner_dict["reason"]
@@ -90,9 +90,10 @@ def go():
 			utf_title = noti_dict["title"]
 
 			mail_body[utf_title] = noti_dict["contents"]
+			logging.debug(mail_body)
+	return check_mail.check("건강보험공단(+사회보험통합징수포털)", mail_body)
+	#return go_popup()
 
-	check_mail.check("건강보험공단(+사회보험통합징수포털)", mail_body)
-	return go_popup()
 def go_popup():
 	# ===================================================#
 	# 메일에 들어갈 내용
