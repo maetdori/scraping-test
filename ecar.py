@@ -93,20 +93,21 @@ def go():
 
             # 공지 세부 내용
             temp = str(content).replace(" ","").split("<br/>")
-            flag = False
             for i in temp: 
+                flag = False
                 # content에 오늘 날짜 있는지 확인
                 #if "07월31" in i: # test
                 if str(today.month) + "월" + str(today.day) in i:
                     abort_date = i
+                    mail_body[title] = abort_date
                     flag = True
                 if flag and "작업내용" in i:
                     abort_why = i
                 if flag and "대상" in i:   
                     abort_thing = i
 
-                mail_body[title] = abort_date
     return check_mail.check("자동차민원 대국민포털", mail_body)
+
 def fn_BoardDetail(bbs_se_code, ntce_artc_no, inquire_co):
     return "/Application.jsp?nc_menuId=NTA001&bbs_se_code="+bbs_se_code+"&ntce_artc_no="+ntce_artc_no+"&inqire_co="+inquire_co
 
