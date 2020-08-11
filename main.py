@@ -8,6 +8,7 @@ import safedriving
 import hikorea
 import nps
 import efamily
+import ecar
 import gygd
 import credit4u
 import payinfo
@@ -47,17 +48,16 @@ logging.basicConfig(filename=file_name,level=log_level)
 # file = open("./diros.html","w")
 # file.write(a)
 # file.close()
-#noti_list = [gov24.go(), iros.go(), nhis.go(), nps.go(), efamily.go(), safedriving.go(), hikorea.go(), payinfo.go()]  # gygd : 금융감독원 통합연금포털
-noti_list = [gov24.go()]
-noti_total = 8
+
+noti_list = [gov24.go(), iros.go(), nhis.go(), nps.go(), ecar.go(), efamily.go(), safedriving.go(), hikorea.go(), payinfo.go()]  # gygd : 금융감독원 통합연금포털
+#noti_list = [ecar.go()]
+noti_total = 9
 noti_string = ""
 noti = "" 
 #   noti_list 의 원소들을 실행시킨 return 값을 문자열로 바꾸어 noti_string 에 저장한다.
 for i in noti_list:
     try:
-        logging.debug("noti_String")
         noti_string += str(i)
-        logging.debug("noti_string : " + noti_string)
     except:
         logging.error("noti_String Error")
         send_email("비정상1",['에러 발생'])
