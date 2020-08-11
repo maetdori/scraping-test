@@ -10,6 +10,7 @@ import send_dooray
 import datetime
 import logging
 import json
+import re
 
 #log config
 with open("./globalval.json",'r') as file:
@@ -57,14 +58,12 @@ def go():
         # 날짜 포맷 변경
         convert_to_date = datetime.datetime.strptime(string_dates, "%Y.%m.%d")
 
-        # 오늘날짜의 새로운 공지가 있니?
         if convert_to_date.strftime("%Y%m%d") <= today.strftime("%Y%m%d"):
-        #if convert_to_date.strftime("%Y%m%d") == "2020.08.03":
             # 제목 선택
             current_title = titles_dates[(i - 1)]
             title_link = current_title.find('a')
             title = current_title.text
-            if "중단" in title:
+            if "중단" in title or "점검" in title:
                 # 상세 페이지 이동
                 ahref = "https://www.gov.kr" + title_link['href']
                 sub_req = requests.get(ahref)
@@ -81,7 +80,7 @@ def go():
                     if str(today.month) + "." + str(today.day) in i:
                         check = True
                 if check:
-                    temp = str(utf_content).split("○")
+                    temp = re.split("[○,▶]", str(utf_content))
                     for item in temp:
                         logging.debug("item")
                         logging.debug(item)
@@ -128,10 +127,6 @@ def go():
                         if "중단대상" in item or "중단업무" in item:
                             abort_thing = item
 
-                        logging.debug("123")
-                        logging.debug(abort_date)
-                        logging.debug(abort_why)
-                        logging.debug(abort_thing)
                     check = False
                     #utf_title = title.encode('utf-8')
                     utf_title = title
