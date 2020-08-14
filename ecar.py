@@ -40,11 +40,6 @@ def go():
     # access to notification page and get html
     html = opener.open(url).read().decode('utf-8')
 
-    # response
-    f = open("./response.txt", "w")
-    f.write(str(html))
-    f.close()
-
     # parse html
     soup = BeautifulSoup(html, "html.parser")
 
