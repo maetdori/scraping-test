@@ -39,11 +39,6 @@ def go():
 	# access to notification page and get html
 	html = opener.open(url).read().decode("utf-8")
 
-	# response
-	f = open("./response.txt", "w", -1, "utf-8")
-	f.write(str(html))
-	f.close()
-
 	soup = BeautifulSoup(html, 'html.parser')
 	table = soup.find('table', {'class': 'grid'})
 	trs = table.find_all('tr')
@@ -56,16 +51,11 @@ def go():
 		title = tds[2].get_text().strip()
 
 		if "중단" in title or "점검" in title:
-		#if "후베이성" in title: # test
 			# access detail page to get content
 			param = tds[2].find("a").get("onclick").split("'")
 			seq = param[1]
 			ahref = boardDetailR(seq)
 			html = opener.open(ahref).read().decode('utf-8')
-
-			f = open("./response2.txt", "w", -1, "utf-8")
-			f.write(str(html))
-			f.close()
 
 			# parse html
 			sub_soup = BeautifulSoup(html, "html.parser")
@@ -77,7 +67,6 @@ def go():
 
 			for line in content_line:
 				if str(today.month) + "." + str(today.day) in line:
-				#if "20.08.10" in line: # test
 					abort_date = line
 					mail_body[title] = abort_date	
 		else: 
@@ -94,11 +83,6 @@ def go():
 
 	# access to notification page and get html
 	html = opener.open(url).read().decode("utf-8")
-
-	# response
-	f = open("./response.txt", "w", -1, "utf-8")
-	f.write(str(html))
-	f.close()
 
 	soup = BeautifulSoup(html, 'html.parser')
 	table = soup.find('div', {'class': 'visual_text'})

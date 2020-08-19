@@ -36,9 +36,6 @@ def go():
     today = datetime.datetime.now()
     #===================================================#
 
-    #===================================================#
-    # 공지사항 화면 체크 
-
     # make session
     cj = http.cookiejar.LWPCookieJar()
     opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cj))

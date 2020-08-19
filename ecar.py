@@ -9,17 +9,6 @@ import datetime
 import json
 import logging
 
-#===================================================#
-#메일에 들어갈 내용
-mail_body = {}
-abort_date = "N"
-abort_thing = "N"
-abort_why = "N"
-
-#오늘날짜
-today = datetime.datetime.now()
-#===================================================#
-
 def go():
     #===================================================#
     #메일에 들어갈 내용
@@ -56,10 +45,6 @@ def go():
 
     response = requests.get(url, headers=headers)
     html = response.text
-
-    f = open("./response2.txt", "w")
-    f.write(html)
-    f.close()
     
     soup = BeautifulSoup(html, "html.parser")
 
@@ -91,7 +76,6 @@ def go():
             for i in temp: 
                 flag = False
                 # content에 오늘 날짜 있는지 확인
-                #if "07월31" in i: # test
                 if str(today.month) + "월" + str(today.day) in i:
                     abort_date = i
                     mail_body[title] = abort_date
