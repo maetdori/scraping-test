@@ -4,6 +4,10 @@ import check_mail
 import datetime
 import json
 import logging
+import urllib
+import PIL
+import pytesseract
+from PIL import Image
 
 #log config
 with open("./globalval.json",'r') as file:
@@ -19,7 +23,6 @@ def go():
 	mail_body = {}
 	# 오늘날짜
 	today = datetime.datetime.now()
-	today = str(today.strftime('%y/%m/%d'))
 	# ===================================================#
 	html = urlopen('https://www.nps.or.kr/jsppage/app/cms/list.jsp?cmsId=news')
 	soup = BeautifulSoup(html, 'html.parser')
@@ -28,14 +31,24 @@ def go():
 		title = i.get_text()
 		# 공지 제목에 '중단'이 있으면 들어가서 날짜 확인후 이미지 가져오기
 		if '중단' in title:
+			# 상세페이지
 			href = 'https://www.nps.or.kr/jsppage/app/cms/' + i.find('a').get('href')
 			html = urlopen(href)
+			
 			detail_soup = BeautifulSoup(html, 'html.parser')
-			date = detail_soup.find('dd',{'class':'view_dd2_2'}).get_text()
-			if today in date:
-				img = detail_soup.find('dl', {'class':'view_dl3'})
-				try:
-					mail_body[title] = img.find('img').get('src')
-				except:
-					pass
+			dl = detail_soup.find('dl', {'class':'view_dl3'})
+
+			# 공지사항 이미지 받아오기
+			img_url = dl.find('img').get('src')
+			urllib.request.urlretrieve(img_url, 'nps' + '.png')
+
+			# 이미지 텍스트 변환
+			img = Image.open('nps.png')
+			text = pytesseract.image_to_string(img, lang='kor')
+			
+			content = text.replace(". ", ".").replace(" ~ ", "~")
+
+			if str(today.month) + "." + str(today.date) in element:
+				mail_body[title] = img_url
+				
 	return check_mail.check("국민연금공단", mail_body)
