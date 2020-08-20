@@ -40,7 +40,7 @@ def send(sitetype, dict, attach_img=None, to=[], cc=[], bcc=['odong2@flyhigh-x.c
 
         msg = MIMEMultipart()
         msg.attach(attach_img)
-        msg.attach(MIMEText(top + body, "html", _charset="utf-8"))
+        msg.attach(MIMEText(top + body + bot, "html", _charset="utf-8"))
         msg['Subject'] = Header(s=title, charset="utf-8")
 
     elif(sitetype == "인터넷 등기소"):
@@ -56,7 +56,7 @@ def send(sitetype, dict, attach_img=None, to=[], cc=[], bcc=['odong2@flyhigh-x.c
             # mail_body[noti["title"]] = abort_date
             body +="""%s<br></p>""" % dict[k]
 
-        msg = MIMEText(top+body, "html", _charset="utf-8")
+        msg = MIMEText(top+body+bot, "html", _charset="utf-8")
         msg['Subject'] = Header(s=title, charset="utf-8")
 
     elif(sitetype == "국민연금공단"):
@@ -76,7 +76,7 @@ def send(sitetype, dict, attach_img=None, to=[], cc=[], bcc=['odong2@flyhigh-x.c
             body += """<br><p style="margin:0px; padding:0px;"> %s<br>""" % (k)
             body += """%s</p>""" % dict[k]
             i += 1
-        msg = MIMEText(top + body, "html", _charset="utf-8")
+        msg = MIMEText(top + body + bot, "html", _charset="utf-8")
         msg['Subject'] = Header(s=title, charset="utf-8")
 
     # 옴니독
@@ -103,7 +103,7 @@ def send(sitetype, dict, attach_img=None, to=[], cc=[], bcc=['odong2@flyhigh-x.c
                 #중단일시: 2019.2.22(금) 18:00 ~ 2019.2.27(수) 09:00
                 body +="""- %s</p>""" % dict[k]
                 i+=1
-        msg = MIMEText(top + body, "html", _charset="utf-8")
+        msg = MIMEText(top + body + bot, "html", _charset="utf-8")
         msg['Subject'] = Header(s=title, charset="utf-8")
 
     msg['From'] = sender_account
