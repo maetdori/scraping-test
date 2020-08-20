@@ -48,7 +48,7 @@ def go():
 			
 			content = text.replace(". ", ".").replace(" ~ ", "~")
 
-			if str(today.month) + "." + str(today.date) in element:
+			if str(today.month) + "." + str(today.date) in content:
 				mail_body[title] = img_url
 				
 	return check_mail.check("국민연금공단", mail_body)
