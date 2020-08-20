@@ -63,11 +63,7 @@ def go():
             ahref = "http://www.ecar.go.kr" + fn_BoardDetail(bbs, ntce, inquire)
             sub_req = requests.get(ahref, headers = headers)
             html = sub_req.text
-
-            f = open("./detailpage.txt", "w")
-            f.write(str(html))
-            f.close()
-
+            
             sub_soup = BeautifulSoup(html, 'html.parser')
             content = sub_soup.find('div', {'class': 'table_txt'})
 

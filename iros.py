@@ -37,88 +37,25 @@ def go():
 
 	# access to notification page and get html
 	html = opener.open("http://www.iros.go.kr/pos1/pfrontservlet?cmd=PCMS6GetBoardC&menuid=001004003001&boardTypeID=2&category=").read().decode('euc-kr')
-	#
-	f = open("./response.txt", "w")
-	f.write(str(html))
-	f.close()
-
+	
 	# parse html
 	soup = BeautifulSoup(html, "html.parser")
 	
-	# find noti title / date / content
-	noti_list = []
-	noti_table = soup.find("table")
+	noti_table = soup.find("tbody")
+
 	for tr in noti_table.find_all("tr"): # 1 tr for 1 notice
-		if tr.td == None: continue	# skip when td is None
-		td = tr.find_all("td")
+		td = tr.find("td", {"class": "tl"})
+		title = td.get_text()
 
-		# get title / date
+		if "중단" in title or "점검" in title:
+			html = opener.open("http://www.iros.go.kr" + td.a["href"]).read().decode('euc-kr')
+			sub_soup = BeautifulSoup(html, 'html.parser')
+			content = sub_soup.find('div', {'class': 'view_con'})
+			content = str(content).replace("년 ", ".").replace("월 ", ".").replace("일 ", ".").split("○")
+			
+			for i in content:
+				if str(today.month) + "." + str(today.day) in i:
+					abort_date = i
+					mail_body[title] = abort_date
 
-		title = td[0].get_text().strip()
-		date = td[1].get_text().strip()
-
-		# test compare date with today
-		if date != today.strftime("%Y-%m-%d"):	# skip when not today
-		#if date != "2020-08-05":
-			continue
-
-		logging.debug(title + date)
-		
-		# access noti detail page for get content
-
-		html = opener.open("http://www.iros.go.kr" + td[0].a["href"]).read().decode('euc-kr')
-
-		# parse html
-		sub_soup = BeautifulSoup(html, "html.parser")
-		for br in sub_soup.find_all("br"):
-			br.replace_with("\n")
-
-		# get content
-		content = sub_soup.find(class_="view_con")
-		content_str = content.get_text()
-		content_str = content_str.strip()
-
-		# append noti_list
-		noti = {
-			"title":title,
-			"date":date,
-			"content":content_str
-		}
-		noti_list.append(noti)
-		
-		logging.debug(noti_list)
-
-	noti_list.sort(key=lambda x: x["date"], reverse=True)
-
-	if len(noti_list) == 0:
-		return check_mail.check("인터넷 등기소", mail_body)
-	else:
-		new = True
-		abort_date = "N"
-		abort_why = "N"
-		abort_thing ="N"
-		for noti in noti_list:
-			for item in noti["content"].split("○"):
-				#abort_date
-				if abort_date == "N" and "중단일시" in item and "중단대상" in item:
-					abort_date = item[:item.index('중단대상')]
-				if "중단일시"  in item and abort_date == "N":
-					abort_date = item
-				if "중단 일시" in item:
-					abort_date = item[item.find('중단 일시'):item.index('※')]
-
-				#abort_why
-				if "중단사유" in item or "작업사유" in item:
-					abort_why = item[item.find('작업사유'):]
-
-				#abort_thing
-				if "중단대상" in item:
-					abort_thing = item[item.find('중단대상'):item.find('※')]
-				if "중단 대상" in item:
-					abort_thing = item
-				else:
-					return check_mail.check("인터넷 등기소", mail_body)
-			#logging.debug("title: " , noti["title"])
-			mail_body[noti["title"]] = abort_date
-			return check_mail.check("인터넷 등기소", mail_body)
-
+	return check_mail.check("인터넷 등기소", mail_body)

@@ -47,8 +47,7 @@ def go():
 			text = pytesseract.image_to_string(img, lang='kor')
 			
 			content = text.replace(". ", ".").replace(" ~ ", "~")
-
-			if str(today.month) + "." + str(today.date) in content:
+			if str(today.month) + "." + str(today.day) in content:
 				mail_body[title] = img_url
 				
 	return check_mail.check("국민연금공단", mail_body)
