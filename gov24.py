@@ -77,7 +77,7 @@ def go():
                 temp = str(utf_content).replace("년",".").replace("월",".").replace("일",".").replace(" ","").split("<br/>")
                 check = False
                 for i in temp:
-                    if str(today.month) + "." + str(today.day) in i:
+                    if str(today.month) + "." + str(today.day) in i and "중단" in i:
                         check = True
                 if check:
                     temp = re.split("[○,▶]", str(utf_content))
