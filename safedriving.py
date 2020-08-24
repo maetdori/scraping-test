@@ -42,7 +42,7 @@ def go():
 	#화면 최대화
 	driver.maximize_window()
 	#스크린샷
-	filename = os.getcwd() + "/todayscreen" + ".png"
+	filename = os.getcwd() + "/safedriving" + ".png"
 	shot = driver.get_screenshot_as_file(filename)
 	driver.quit()
 
@@ -56,11 +56,6 @@ def go():
 	image = PIL.Image.fromarray(image)
 	text = pytesseract.image_to_string(image, 'kor').split('\n')
 
-	# MIMEImage로 변환
-	fp = open("todayscreen.png", 'rb')
-	img = MIMEImage(fp.read())
-	fp.close()
-
 	#"중단"이라는 단어가 있으면 
 	if any("중단" in s for s in text):
 		#오늘날짜가 있으면 메일 보내기
@@ -68,5 +63,4 @@ def go():
 			item = item.replace(" ", "").replace(',','.')
 			if today.strftime("%Y.%m.%d") in item:
 				mail_body["도로교통공단 안전운전 통합민원"] = item
-				return check_mail.check("도로교통공단 안전운전 통합민원",mail_body,attach_img=img)
-	return check_mail.check("도로교통공단 안전운전 통합민원", {})
+	return check_mail.check("도로교통공단 안전운전 통합민원",mail_body)

@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 import check_mail
+import requests
 import datetime
 import json
 import logging
@@ -24,7 +25,15 @@ def go():
 	# 오늘날짜
 	today = datetime.datetime.now()
 	# ===================================================#
-	html = urlopen('https://www.nps.or.kr/jsppage/app/cms/list.jsp?cmsId=news')
+	
+	try:
+		req = requests.get('https://www.nps.or.kr/jsppage/app/cms/list.jsp?cmsId=news')
+	except requests.ConnectionError: 
+		return check_mail.check("국민연금공단(서버연결실패)", mail_body)
+	except TimeoutError: 
+		return check_mail.check("국민연금공단(서버연결실패_타임아웃)", mail_body)
+
+	html = req.text
 	soup = BeautifulSoup(html, 'html.parser')
 	soup = soup.find_all('td', {'class':'tl'})
 	for i in soup:
