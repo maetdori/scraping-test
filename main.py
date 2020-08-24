@@ -36,21 +36,7 @@ log_level = json_data["log_level"]
 
 logging.basicConfig(filename=file_name,level=log_level)
 
-#file open test
-# file = open("./iros.html","r")
-# a = ""
-# while True:
-#     line = file.readline()
-#     line = line.encode()
-#     if not line : break
-#     line = line.decode("utf-8")
-#     a = a + line
-# file = open("./diros.html","w")
-# file.write(a)
-# file.close()
-
 noti_list = [gov24.go(), iros.go(), nhis.go(), nps.go(), ecar.go(), efamily.go(), safedriving.go(), hikorea.go(), payinfo.go()]  # gygd : 금융감독원 통합연금포털
-#noti_list = [ecar.go()]
 noti_total = 9
 noti_string = ""
 noti = "" 
@@ -60,7 +46,7 @@ for i in noti_list:
         noti_string += str(i)
     except:
         logging.error("noti_String Error")
-        send_email("비정상1",['에러 발생'])
+        send_email.send("비정상1",['에러 발생'])
 
 #   noti_string 의 문자열을 넘버링하여 noti 로 저장.
 k = 0
